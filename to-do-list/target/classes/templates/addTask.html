@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>addTasks</title>
+</head>
+<body>
+    <h1>Create new task</h1>
+    <form th:action="@{/addTask}" th:object="${taskForm}" method="post">
+        Task Name:
+        <input type="text" th:field="*{name}" />
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name Error</p>
+        <br/>
+        Description:
+        <input type="text" th:field="*{description}" />
+        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Description Error</p>
+        <br/>
+        Priority:
+        <input type="text" th:field="*{priority}" />
+        <p th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}" style="color: red">Name Error</p>
+        <br/>
+        Tasks List:
+        <select id="tasksList" name="tasksList">
+            <option th:each="tasksList: ${tasksLists}" th:value="${tasksList.id}" th:text="${tasksList.name}"></option>
+        </select>
+        <br/>
+        <input type="submit" value="Create" />
+    </form>
+
+</body>
+</html>

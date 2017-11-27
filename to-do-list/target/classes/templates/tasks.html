@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Task Lists</title>
+</head>
+<body>
+    <h1>Tasks</h1>
+    <form th:action="@{/searchTaskByName}" method="get">
+        <input id="searchTaskName" name="searchTaskName" type="text" />
+        <input type="submit" value="Search by name" /></form>
+    <br/>
+    <form th:action="@{/searchTaskByStatus}" method="get">
+        <select name="taskStatuses">
+            <option th:each="status: ${statuses}" th:utext="${status}"></option>
+        </select>
+        <input type="submit" value="Search by status" /></form>
+    <form th:action="@{/searchTaskByTasksList}" method="get">
+        <select name="tasksLists">
+            <option th:each="tasksList: ${tasksLists}" th:value="${tasksList.id}" th:text="${tasksList.name}"></option>
+        </select>
+        <input type="submit" value="Search by Tasks List" /></form>
+    <div>
+        <table border="1">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Created At</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Complete At</th>
+                <th>Tasks List</th>
+                <th>Action</th>
+            </tr>
+            <tr th:each ="task : ${tasks}">
+                <td th:utext="${task.name}">...</td>
+                <td th:utext="${task.description}"></td>
+                <td th:utext="${task.createdAt}"></td>
+                <td th:utext="${task.status}"></td>
+                <td th:utext="${task.priority}"></td>
+                <td th:utext="${task.completeAt}"></td>
+                <td th:utext="${task.tasksList.name}"></td>
+                <td><form th:action="@{/editTask}" method="get"><button>Edit<input type="hidden" name="taskId" th:value="${task.id}" /></button></form>
+                    <form th:action="@{/DeleteTask}" method="post"><button>Delete<input type="hidden" name="deleteTaskId" th:value="${task.id}" /></button></form></td>
+                <td th:if="${task.completeAt}==null"><form th:action="@{/CompleteTask}" method="post"><button>Complete<input type="hidden" name="completeTaskId" th:value="${task.id}" /></button></form></td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+    <h3><a th:href="@{/addTask}">Create new task</a></h3>
+    <h5><a th:href="@{/}">Return</a></h5>
+</body>
+</html>

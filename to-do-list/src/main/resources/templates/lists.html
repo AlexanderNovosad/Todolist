@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Task Lists</title>
+</head>
+<body>
+    <h1>Tasks Lists</h1>
+    <form th:action="@{/searchListByName}" method="get">
+        <input id="searchItem" name="searchItem" type="text" />
+        <input type="submit" value="Search by name" /></form>
+    <br/>
+    <form th:action="@{/searchListByColor}" method="get">
+        <select name="listsColors">
+            <option th:each="color: ${colors}" th:utext="${color}"></option>
+        </select>
+        <input type="submit" value="Search by color" /></form>
+    <div>
+        <table border="1">
+            <tr>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Action</th>
+            </tr>
+            <tr th:each ="tasksList : ${tasksLists}">
+                <td th:utext="${tasksList.name}">...</td>
+                <td th:bgcolor="${tasksList.color}"></td>
+                <td><form th:action="@{/editList}" method="get"><button>Edit<input type="hidden" name="listId" th:value="${tasksList.id}" /></button></form>
+                    <form th:action="@{/DeleteList}" method="post"><button>Delete<input type="hidden" name="deleteListId" th:value="${tasksList.id}" /></button></form></td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+    <h3><a th:href="@{/addList}">Create new list</a></h3>
+    <h5><a th:href="@{/}">Return</a></h5>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>editLists</title>
+</head>
+<body>
+    <h1>Edit your list</h1>
+    <form th:action="@{/edit}" th:object="${editForm}" method="post">
+        <input type="hidden" name="listId" th:value="*{id}" />
+        List Name:
+        <input type="text" th:field="*{name}" />
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name Error</p>
+        <br/>
+        Color:
+        <select id="color" name="color">
+            <option th:each="color: ${colors}" th:utext="${color}"></option>
+        </select>
+        <br/>
+        <input type="submit" value="Edit" />
+    </form>
+
+</body>
+</html>
